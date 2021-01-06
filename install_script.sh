@@ -42,6 +42,7 @@ cp -v linux64/steamclient.so ../.steam/sdk64/steamclient.so
 cd /home/container/StardewValley
 mkdir -p /home/container/nexus
 mkdir -p /home/container/storage
+mkdir -p /home/container/logs
 wget https://github.com/Pathoschild/SMAPI/releases/download/3.8/SMAPI-3.8.0-installer.zip -qO /home/container/storage/nexus.zip
 unzip /home/container/storage/nexus.zip -d /home/container/nexus/
 /bin/bash -c "echo -e \"2\n/home/container/StardewValley\n1\n\" | /usr/bin/mono /home/container/nexus/SMAPI\ 3.8.0\ installer/internal/unix-install.exe"
