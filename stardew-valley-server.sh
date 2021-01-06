@@ -1,9 +1,5 @@
 #!/bin/bash
 
-mkdir /tmp/.X11-unix
-chmod 1777 /tmp/.X11-unix
-chown root /tmp/.X11-unix/
-
 if [ -f /tmp/.X10-lock ]; then rm /tmp/.X10-lock; fi
 Xvfb :10 -screen 0 884x515x24 -ac &
 

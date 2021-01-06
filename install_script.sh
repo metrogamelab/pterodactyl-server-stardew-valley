@@ -4,7 +4,7 @@
 # Server Files: /mnt/server
 # Image to install with is 'mono:latest'
 apt -y update
-apt -y --no-install-recommends install curl lib32gcc1 ca-certificates wget unzip libsdl2-2.0-0
+apt -y --no-install-recommends install curl lib32gcc1 ca-certificates wget unzip
 
 ## just in case someone removed the defaults.
 if [ "${STEAM_USER}" == "" ]; then
