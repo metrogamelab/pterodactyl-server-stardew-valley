@@ -14,4 +14,4 @@ sleep 5
 i3 &
 export XAUTHORITY=~/.Xauthority
 TERM=xterm
-./StardewValley/StardewValley
+./StardewValley
