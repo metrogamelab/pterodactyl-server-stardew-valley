@@ -43,6 +43,9 @@ cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steam
 
 ## Game specific setup.
 cd /mnt/server/
+mkdir -p ./.config
+mkdir -p ./.config/i3
+mkdir -p ./.config/StardewValley
 mkdir -p ./nexus
 mkdir -p ./storage
 mkdir -p ./logs
@@ -51,8 +54,8 @@ mkdir -p ./logs
 wget https://github.com/Pathoschild/SMAPI/releases/download/3.8/SMAPI-3.8.0-installer.zip -qO ./storage/nexus.zip
 unzip ./storage/nexus.zip -d ./nexus/
 /bin/bash -c "echo -e \"2\n/mnt/server\n1\n\" | /usr/bin/mono /mnt/server/nexus/SMAPI\ 3.8.0\ installer/internal/unix-install.exe"
-wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/stardew_valley_server.config -qO ./storage/stardew_valley_server.config
-wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/i3.config -qO ./config
+wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/stardew_valley_server.config -qO ./.config/StardewValley/startup_preferences
+wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/i3.config -qO ./.config/i3/config
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/alwayson.zip -qO ./storage/alwayson.zip
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/unlimitedplayers.zip -qO ./storage/unlimitedplayers.zip
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/autoloadgame.zip -qO ./storage/autoloadgame.zip
@@ -65,5 +68,6 @@ wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-v
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/stardew-valley-server.sh -qO ./stardew-valley-server.sh
 chmod +x ./stardew-valley-server.sh 
 rm ./storage/alwayson.zip ./storage/unlimitedplayers.zip ./storage/autoloadgame.zip
+chown -R 1000:1000 /mnt/server
 
 echo 'Stardew Valley Installation complete. Restart server.'
