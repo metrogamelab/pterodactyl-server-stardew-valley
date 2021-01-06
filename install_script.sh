@@ -35,11 +35,11 @@ cd /mnt/server/steamcmd
 
 ## set up 32 bit libraries
 mkdir -p /mnt/server/.steam/sdk32
-cp -v /mnt/server/linux32/steamclient.so /mnt/server/.steam/sdk32/steamclient.so
+cp -v /mnt/server/steamdcmd/linux32/steamclient.so /mnt/server/.steam/sdk32/steamclient.so
 
 ## set up 64 bit libraries
 mkdir -p /mnt/server/.steam/sdk64
-cp -v /mnt/server/linux64/steamclient.so /mnt/server/.steam/sdk64/steamclient.so
+cp -v /mnt/server/steamcmd/linux64/steamclient.so /mnt/server/.steam/sdk64/steamclient.so
 
 ## Game specific setup.
 cd /mnt/server/
