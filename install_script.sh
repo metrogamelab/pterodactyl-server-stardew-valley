@@ -16,26 +16,27 @@ else
 fi
 
 ## download and install steamcmd
-mkdir -p /home/container/steamcmd
-cd /home/container
-wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz -qO /home/container/steamcmd.tar.gz
-tar -xzvf /home/container/steamcmd.tar.gz -C /home/container/steamcmd
-cd /home/container/steamcmd
-export HOME=/home/container
+cd /tmp
+mkdir -p /mnt/server/steamcmd
+curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
+tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
+cd /mnt/server/steamcmd
+
+# SteamCMD fails otherwise for some reason, even running as root.
+# This is changed at the end of the install process anyways.
+chown -R root:root /mnt
+export HOME=/mnt/server
 
 ## install game using steamcmd
-/home/container/steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +force_install_dir /home/container/StardewValley +app_update ${SRCDS_APPID} validate +quit
+./steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +force_install_dir /home/container/StardewValley +app_update ${SRCDS_APPID} validate +quit
 
 ## set up 32 bit libraries
-mkdir -p /home/container/.steam/sdk32
-cp -v /home/container/steamcmd/linux32/steamclient.so /home/container/.steam/sdk32/steamclient.so
+mkdir -p /mnt/server/.steam/sdk32
+cp -v linux32/steamclient.so ../.steam/sdk32/steamclient.so
 
 ## set up 64 bit libraries
-mkdir -p /home/container/.steam/sdk64
-cp -v /home/container/steamcmd/linux64/steamclient.so /home/container/.steam/sdk64/steamclient.so
-
-## Symlink steamcmd
-ln -s /home/container/steamcmd/steamcmd.sh /home/container/steamcmd.sh
+mkdir -p /mnt/server/.steam/sdk64
+cp -v linux64/steamclient.so ../.steam/sdk64/steamclient.so
 
 ## Stardew Valley specific setup.
 cd /home/container/StardewValley
@@ -55,6 +56,8 @@ unzip /home/container/storage/autoloadgame.zip -d /home/container/StardewValley/
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/alwayson.json -qO /home/container/StardewValley/Mods/Always On Server/config.json
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/unlimitedplayers.json -qO /home/container/StardewValley/Mods/UnlimitedPlayers/config.json
 wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/autoloadgame.json -qO /home/container/StardewValley/Mods/AutoLoadGame/config.json
-wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/stardew-valley-server.sh -qO /home/container/stardew-valley-server.sh
-chmod +x /home/container/stardew-valley-server.sh 
+wget https://github.com/metrogamelab/pterodactyl-server-stardew-valley/raw/main/stardew-valley-server.sh -qO /home/container/StardewValley/stardew-valley-server.sh
+chmod +x /home/container/StardewValley/stardew-valley-server.sh 
 rm /home/container/storage/alwayson.zip /home/container/storage/unlimitedplayers.zip /home/container/storage/autoloadgame.zip
+
+echo 'Stardew Valley Installation complete. Restart server.'
