@@ -17,33 +17,32 @@ else
     echo -e "user set to ${STEAM_USER}"
 fi
 
-## download and install steamcmd
 cd /tmp
 mkdir -p /mnt/server/steamcmd
-curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
-tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
-cd /mnt/server/steamcmd
 
 # SteamCMD fails otherwise for some reason, even running as root.
 # This is changed at the end of the install process anyways.
 chown -R root:root /mnt
 export HOME=/mnt/server
 
+## download and install steamcmd
+curl -sSL -o steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
+tar -xzvf steamcmd.tar.gz -C /mnt/server/steamcmd
+cd /mnt/server/steamcmd
+
 ## install game using steamcmd
 ./steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +force_install_dir /mnt/server +app_update ${SRCDS_APPID} validate +quit
 
 ## set up 32 bit libraries
 mkdir -p /mnt/server/.steam/sdk32
-cp -v linux32/steamclient.so ../.steam/sdk32/steamclient.so
+cp -v /mnt/server/linux32/steamclient.so /mnt/server/.steam/sdk32/steamclient.so
 
 ## set up 64 bit libraries
 mkdir -p /mnt/server/.steam/sdk64
-cp -v linux64/steamclient.so ../.steam/sdk64/steamclient.so
+cp -v /mnt/server/linux64/steamclient.so /mnt/server/.steam/sdk64/steamclient.so
 
 ## Game specific setup.
 cd /mnt/server/
-## setup the directory stucture
-mkdir -p ./StardewValley
 mkdir -p ./nexus
 mkdir -p ./storage
 mkdir -p ./logs
@@ -58,8 +57,8 @@ wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-s
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-server/unlimitedplayers.zip -qO ./storage/unlimitedplayers.zip
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-server/autoloadgame.zip -qO ./storage/autoloadgame.zip
 unzip ./storage/alwayson.zip -d ./Mods
-unzip ./unlimitedplayers.zip -d ./Mods
-unzip ./autoloadgame.zip -d ./Mods
+unzip ./storage/unlimitedplayers.zip -d ./Mods
+unzip ./storage/autoloadgame.zip -d ./Mods
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-server/alwayson.json -qO ./Mods/Always On Server/config.json
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-server/unlimitedplayers.json -qO ./Mods/UnlimitedPlayers/config.json
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-stardew-valley-server/autoloadgame.json -qO ./Mods/AutoLoadGame/config.json
