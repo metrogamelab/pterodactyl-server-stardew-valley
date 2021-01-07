@@ -68,6 +68,5 @@ wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-v
 wget https://raw.githubusercontent.com/metrogamelab/pterodactyl-server-stardew-valley/main/stardew-valley-server.sh -qO ./stardew-valley-server.sh
 chmod +x ./stardew-valley-server.sh 
 rm ./storage/alwayson.zip ./storage/unlimitedplayers.zip ./storage/autoloadgame.zip
-chown -R 1000:1000 /mnt/server
 
 echo 'Stardew Valley Installation complete. Restart server.'
